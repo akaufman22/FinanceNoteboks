@@ -84,3 +84,41 @@ def bsm_ivol(S, K, T, r, q, V, Flag, sigma_est, it=100, tol=0.001):
         if abs(sigma_est - sigma_prev) < tol:
             break
     return sigma_est
+
+
+def bsm_gamma(S, K, T, r, q, sigma):
+    from math import log, sqrt, exp
+    from scipy import stats
+    d1 = (log(S/K) + (r - q + 0.5 * sigma ** 2) * T) / (sigma * sqrt(T))
+    return (stats.norm.pdf(d1, 0, 1) * exp(-q * T) / (S * sigma * sqrt(T)))
+
+
+def bsm_theta(S, K, T, r, q, sigma, Flag):
+    from math import log, sqrt, exp
+    from scipy import stats
+    d1 = (log(S/K) + (r - q + 0.5 * sigma ** 2) * T) / (sigma * sqrt(T))
+    d2 = (log(S/K) + (r - q - 0.5 * sigma ** 2) * T) / (sigma * sqrt(T))
+    if Flag == 0:
+        theta = -exp(-q * T) * S * sigma * stats.norm.pdf(d1, 0, 1) / \
+            (2 * sqrt(T)) - r * K * exp(-r * T) * stats.norm.cdf(d2, 0, 1) + \
+            q * S * exp(-q * T) * stats.norm.cdf(d1, 0, 1)
+    elif Flag == 1:
+        theta = -exp(-q * T) * S * sigma * stats.norm.pdf(-d1, 0, 1) / \
+            (2 * sqrt(T)) + r * K * exp(-r * T) * stats.norm.cdf(-d2, 0, 1) - \
+            q * S * exp(-q * T) * stats.norm.cdf(-d1, 0, 1)
+    else:
+        theta = 'NaN'
+    return theta
+
+
+def bsm_rho(S, K, T, r, q, sigma, Flag):
+    from math import log, sqrt, exp
+    from scipy import stats
+    d2 = (log(S/K) + (r - q - 0.5 * sigma ** 2) * T) / (sigma * sqrt(T))
+    if Flag == 0:
+        rho = K * T * exp(-r * T) * stats.norm.cdf(d2, 0, 1)
+    elif Flag == 1:
+        rho = -K * T * exp(-r * T) * stats.norm.cdf(-d2, 0, 1)
+    else:
+        rho = 'NaN'
+    return rho

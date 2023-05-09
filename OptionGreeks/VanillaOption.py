@@ -25,6 +25,15 @@ class VanillaOption():
     def bs_delta(self, S, r, q, sigma):
         return bsm_delta(S, self.K, self.T, r, q, sigma, self.Flag)
 
+    def bs_gamma(self, S, r, q, sigma):
+        return bsm_gamma(S, self.K, self.T, r, q, sigma)
+
+    def bs_theta(self, S, r, q, sigma):
+        return bsm_theta(S, self.K, self.T, r, q, sigma, self.Flag)
+
+    def bs_rho(self, S, r, q, sigma):
+        return bsm_rho(S, self.K, self.T, r, q, sigma, self.Flag)
+
     def bs_delta_prem(self, S, r, q, sigma):
         return bsm_delta_prem(S, self.K, self.T, r, q, sigma, self.Flag)
 
