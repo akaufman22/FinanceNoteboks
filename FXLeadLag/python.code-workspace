@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../backtest_tutorial/venv"
+		},
+		{
+			"path": "../../FX-Lead-Lag/venv"
+		},
+		{
+			"path": "../../RandomNotebooks/MoexScrap/venv"
+		},
+		{
+			"path": "../../RandomNotebooks/CVmatch/venv"
+		},
+		{
+			"path": "venv"
+		}
+	],
+	"settings": {}
+}
